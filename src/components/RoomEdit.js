@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Text, ScrollView } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import Communications from 'react-native-communications';
 
 import { employeeUpdate, employeeEdit, employeeDelete } from '../actions';
@@ -22,16 +22,19 @@ class RoomEdit extends Component {
     }
 
     return roomMessages.map(message =>
-      <Text key={message}>
-        {message}
-      </Text>
+      <CardSection key={message}>
+        <View style={styles.headerContentStyle}>
+          <Text style={styles.headerTextStyle}>{message}</Text>
+          <Text>{message}</Text>
+        </View>
+      </CardSection>
     );
   }
 
   render() {
     return (
       <Card>
-        <CardSection>
+        <CardSection style={{ marginBottom: 20 }}>
           <ScrollView>
             {this.renderMessages()}
           </ScrollView>
@@ -39,8 +42,8 @@ class RoomEdit extends Component {
 
         <CardSection>
           <Input
-            label="New Message"
-            placeholder="A messsage"
+            label="Message:"
+            placeholder="I love cats..."
           />
         </CardSection>
 
@@ -53,6 +56,17 @@ class RoomEdit extends Component {
     );
   }
 }
+
+const styles = {
+  headerContentStyle: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    fontSize: 18
+  },
+  headerTextStyle: {
+    fontSize: 18
+  }
+};
 
 const mapStateToProps = (state) => {
   const { messages } = state.room;

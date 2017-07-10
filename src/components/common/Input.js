@@ -25,7 +25,7 @@ const styles = {
   inputStyle: {
     color: '#000',
     paddingRight: 5,
-    paddingLeft: 5,
+    paddingLeft: 10,
     fontSize: 18,
     lineHeight: 23,
     flex: 2
@@ -33,7 +33,7 @@ const styles = {
 
   labelStyle: {
     fontSize: 18,
-    paddingLeft: 20,
+    // paddingLeft: 20,
     flex: 1
   },
 

@@ -8,29 +8,33 @@ import ListItem from './ListItem';
 
 class RoomList extends React.Component {
   componentWillMount() {
-    // this.props.employeesFetch();
-    //this.createDataSource(this.props);
+    //this.props.roomsFetch();
+    this.createDataSource([{ name: 'lobby' }]);
   }
 
   componentWillReceiveProps(nextProps) {
-    //this.createDataSource(nextProps);
+    this.createDataSource([{ name: 'lobby' }]);
   }
 
-  createDataSource({ employees }) {
+  createDataSource(rooms) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    this.dataSource = ds.cloneWithRows(employees);
+    this.dataSource = ds.cloneWithRows(rooms);
   }
 
-  renderRow(employee) {
-    return <ListItem />;
+  renderRow(room) {
+    return <ListItem room={room} />;
   }
 
   render() {
     return (
-      <View></View>
+      <ListView
+        enableEmptySections
+        dataSource={this.dataSource}
+        renderRow={this.renderRow}
+      />
     );
   }
 }

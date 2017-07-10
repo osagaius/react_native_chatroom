@@ -6,11 +6,11 @@ import { CardSection } from './common/CardSection';
 
 class ListItem extends React.Component {
   onRowPress() {
-    Actions.employeeEdit({ employee: this.props.employee });
+    Actions.roomEdit({ room: this.props.room });
   }
 
   render() {
-    const { name } = this.props.employee;
+    const { name } = this.props.room;
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
         <View>

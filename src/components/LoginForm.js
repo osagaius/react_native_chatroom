@@ -3,20 +3,16 @@ import { connect } from 'react-redux';
 import { Text } from 'react-native';
 
 import { Button, Card, CardSection, Input, Spinner } from './common';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { userNameChanged, loginUser } from '../actions';
 
 class LoginForm extends React.Component {
-  onEmailChange(text) {
-    this.props.emailChanged(text);
-  }
-
-  onPasswordChange(text) {
-    this.props.passwordChanged(text);
+  onUserNameChange(text) {
+    this.props.userNameChanged(text);
   }
 
   onButtonPress() {
-    const { email, password } = this.props;
-    this.props.loginUser({ email, password });
+    const { userName } = this.props;
+    this.props.loginUser({ userName });
   }
 
   renderButton() {
@@ -39,21 +35,10 @@ class LoginForm extends React.Component {
         <CardSection>
           <Input
             autoCorrect={false}
-            placeholder="user@user.com"
-            label="Email"
+            placeholder="janeausten"
+            label="Username"
             value={this.props.email}
-            onChangeText={this.onEmailChange.bind(this)}
-          />
-        </CardSection>
-
-        <CardSection>
-          <Input
-            secureTextEntry
-            autoCorrect={false}
-            placeholder="password"
-            label="Password"
-            value={this.props.password}
-            onChangeText={this.onPasswordChange.bind(this)}
+            onChangeText={this.onUserNameChange.bind(this)}
           />
         </CardSection>
 
@@ -77,12 +62,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading } = auth;
-
-  return { email, password, error, loading };
+const mapStateToProps = ({ userName }) => {
+  return { userName };
 };
 
 export default connect(mapStateToProps, {
-  emailChanged, passwordChanged, loginUser
+  userNameChanged, loginUser
 })(LoginForm);

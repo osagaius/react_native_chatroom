@@ -1,41 +1,48 @@
-import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
+import { Socket } from 'phoenix';
 
 import {
-  EMAIL_CHANGED,
-  PASSWORD_CHANGED,
+  USERNAME_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
   LOGIN_USER
 } from './types.js';
 
-export const emailChanged = (text) => {
+export const userNameChanged = (text) => {
   return {
-    type: EMAIL_CHANGED,
+    type: USERNAME_CHANGED,
     payload: text
   };
 };
 
-export const passwordChanged = (text) => {
-  return {
-    type: PASSWORD_CHANGED,
-    payload: text
-  };
-};
-
-export const loginUser = ({ email, password }) => {
+export const loginUser = ({ userName }) => {
   return (dispatch) => {
+    const url = 'http://localhost:4000/socket';
+    const socket = new Socket(url, {});
+    socket.onOpen(event => console.log('Connected.', event));
+    socket.onError(event => console.log('Cannot connect.', event));
+    socket.onClose(event => console.log('Goodbye.', event));
+    socket.connect({});
+
     dispatch({ type: LOGIN_USER });
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(user => loginUserSuccess(dispatch, user))
-      .catch((error) => {
-        console.log(error);
+    const chan = socket.channel('room:lobby', { userName });
 
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(user => loginUserSuccess(dispatch, user))
-          .catch(() => loginUserFail(dispatch));
+    // join the channel
+    chan.join()
+      .receive('ignore', () => {
+        loginUserFail(dispatch);
+      })
+      .receive('ok', () => {
+        loginUserSuccess(dispatch, userName);
+      })
+      .receive('timeout', () => {
+        loginUserFail(dispatch);
       });
+
+    // channel-level event handlers
+    //chan.onError(event => console.log('Channel blew up.'))
+    //chan.onClose(event => console.log('Channel closed.'))
   };
 };
 

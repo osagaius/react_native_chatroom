@@ -9,8 +9,8 @@ import { Card, CardSection, Button, Confirm } from './common';
 import RoomForm from './RoomForm';
 
 class RoomEdit extends Component {
-  state = { confirmVisible: false };
-
+  // TODO Fetch messages when we open room
+  
   onButtonPress() {
   }
 

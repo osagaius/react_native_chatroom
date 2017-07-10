@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ListView, View } from 'react-native';
+import { ListView } from 'react-native';
 import _ from 'lodash';
 
 import { employeesFetch } from '../actions';
@@ -8,11 +8,7 @@ import ListItem from './ListItem';
 
 class RoomList extends React.Component {
   componentWillMount() {
-    //this.props.roomsFetch();
-    this.createDataSource([{ name: 'lobby' }]);
-  }
-
-  componentWillReceiveProps(nextProps) {
+    // TODO Fetch rooms from the server
     this.createDataSource([{ name: 'lobby' }]);
   }
 
@@ -38,13 +34,5 @@ class RoomList extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  const employees = _.map(state.employees, (val, uid) => {
-    return { ...val, uid };
-  });
-
-  return { employees };
-};
 
 export default connect(null, { employeesFetch })(RoomList);

@@ -23,9 +23,10 @@ export default (state = INITIAL_STATE, action) => {
         ...INITIAL_STATE
       };
     case LOGIN_USER_FAIL:
+      console.log('auth failed', action.payload);
       return { ...state,
         loading: false,
-        error: 'Authentication Failed.',
+        error: 'Connection Failed.',
         password: ''
       };
     default:

@@ -1,19 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ListView } from 'react-native';
+import { ListView, View } from 'react-native';
 import _ from 'lodash';
 
 import { employeesFetch } from '../actions';
 import ListItem from './ListItem';
 
-class EmployeeList extends React.Component {
+class RoomList extends React.Component {
   componentWillMount() {
-    this.props.employeesFetch();
-    this.createDataSource(this.props);
+    // this.props.employeesFetch();
+    //this.createDataSource(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.createDataSource(nextProps);
+    //this.createDataSource(nextProps);
   }
 
   createDataSource({ employees }) {
@@ -25,16 +25,12 @@ class EmployeeList extends React.Component {
   }
 
   renderRow(employee) {
-    return <ListItem employee={employee} />;
+    return <ListItem />;
   }
 
   render() {
     return (
-      <ListView
-        enableEmptySections
-        dataSource={this.dataSource}
-        renderRow={this.renderRow}
-      />
+      <View></View>
     );
   }
 }
@@ -47,4 +43,4 @@ const mapStateToProps = (state) => {
   return { employees };
 };
 
-export default connect(mapStateToProps, { employeesFetch })(EmployeeList);
+export default connect(null, { employeesFetch })(RoomList);

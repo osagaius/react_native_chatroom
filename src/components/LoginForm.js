@@ -62,8 +62,8 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ userName }) => {
-  return { userName };
+const mapStateToProps = ({ userName, error, loading }) => {
+  return { userName, error, loading };
 };
 
 export default connect(mapStateToProps, {

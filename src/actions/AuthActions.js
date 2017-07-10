@@ -20,8 +20,8 @@ export const loginUser = ({ userName }) => {
     const url = 'http://localhost:4000/socket';
     const socket = new Socket(url, {});
     socket.onOpen(event => console.log('Connected.', event));
-    socket.onError(event => console.log('Cannot connect.', event));
-    socket.onClose(event => console.log('Goodbye.', event));
+    socket.onError(event => loginUserFail(dispatch));
+    socket.onClose(event => loginUserFail(dispatch));
     socket.connect({});
 
     dispatch({ type: LOGIN_USER });

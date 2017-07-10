@@ -15,48 +15,23 @@ export const userNameChanged = (text) => {
   };
 };
 
-export const loginUser = ({ userName }) => {
+// TODO Rename since we aren't doing login stuff here
+export const joinSocket = () => {
   return (dispatch) => {
+    dispatch({ type: LOGIN_USER });
+
     const url = 'http://localhost:4000/socket';
     const socket = new Socket(url, {});
-    socket.onOpen(event => console.log('Connected.', event));
+    socket.onOpen(event => {
+      dispatch({ type: 'connect_success', payload: { socket } });
+      Actions.main();
+    });
     socket.onError(event => loginUserFail(dispatch));
     socket.onClose(event => loginUserFail(dispatch));
     socket.connect({});
-
-    dispatch({ type: LOGIN_USER });
-
-    const chan = socket.channel('room:lobby', { userName });
-
-    // join the channel
-    chan.join()
-      .receive('ignore', () => {
-        loginUserFail(dispatch);
-      })
-      .receive('ok', () => {
-        loginUserSuccess(dispatch, userName);
-      })
-      .receive('timeout', () => {
-        loginUserFail(dispatch);
-      });
-
-    // channel-level event handlers
-    //chan.onError(event => console.log('Channel blew up.'))
-    //chan.onClose(event => console.log('Channel closed.'))
   };
 };
 
-const loginUserSuccess = (dispatch, user) => {
-  dispatch({
-    type: LOGIN_USER_SUCCESS,
-    payload: user
-  });
-
-  Actions.main();
-};
-
 const loginUserFail = (dispatch) => {
-  dispatch({
-    type: LOGIN_USER_FAIL
-  });
+  dispatch({ type: 'connect_fail' });
 };

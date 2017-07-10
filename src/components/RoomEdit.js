@@ -5,9 +5,9 @@ import Communications from 'react-native-communications';
 
 import { employeeUpdate, employeeEdit, employeeDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
-import EmployeeForm from './EmployeeForm';
+import RoomForm from './RoomForm';
 
-class EmployeeEdit extends Component {
+class RoomEdit extends Component {
   state = { confirmVisible: false };
 
   componentWillMount() {
@@ -45,41 +45,11 @@ class EmployeeEdit extends Component {
   render() {
     return (
       <Card>
-        <EmployeeForm {...this.props.employee} />
-        <CardSection>
-          <Button onPress={this.onButtonPress.bind(this)}>
-            Save Changes
-          </Button>
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.onTextPress.bind(this)}>
-            Text Schedule
-          </Button>
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.onFirePress.bind(this)}>
-            Fire Employee
-          </Button>
-        </CardSection>
-
-        <Confirm
-          visible={this.state.confirmVisible}
-          onAccept={this.onAccept.bind(this)}
-          onDecline={this.onDecline.bind(this)}
-        >
-          Are you sure you want to delete this?
-        </Confirm>
+        <RoomForm {...this.props.room} />
+        
       </Card>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  const { name, phone, shift } = state.employeeForm;
-
-  return { name, phone, shift };
-};
-
-export default connect(mapStateToProps, {
-  employeeUpdate, employeeEdit, employeeDelete
-})(EmployeeEdit);
+export default connect(null)(RoomEdit);

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { ListView } from 'react-native';
 import _ from 'lodash';
 
-import { employeesFetch } from '../actions';
 import ListItem from './ListItem';
 
 class RoomList extends React.Component {
@@ -35,4 +34,7 @@ class RoomList extends React.Component {
   }
 }
 
-export default connect(null, { employeesFetch })(RoomList);
+const mapStateToProps = (state) => {
+  return { };
+};
+export default connect(mapStateToProps)(RoomList);

@@ -1,33 +1,29 @@
-import { USERNAME_CHANGED, PASSWORD_CHANGED,
+import { USERNAME_CHANGED,
   LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER } from '../actions/types.js';
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
-  user: null,
+  userName: '',
   error: '',
-  loading: false
+  loading: false,
+  socket: null
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USERNAME_CHANGED:
-      return { ...state, email: action.payload };
-    case PASSWORD_CHANGED:
-      return { ...state, password: action.payload };
+      return { ...state, userName: action.payload };
     case LOGIN_USER:
       return { ...state, loading: true, error: '' };
-    case LOGIN_USER_SUCCESS:
-      return { ...state,
-        user: action.payload,
-        ...INITIAL_STATE
+    case 'connect_success':
+      return {
+        ...state,
+        socket: action.payload.socket
       };
-    case LOGIN_USER_FAIL:
-      console.log('auth failed', action.payload);
+    case 'connect_fail':
       return { ...state,
         loading: false,
         error: 'Connection Failed.',
-        password: ''
+        socket: null
       };
     default:
       return state;

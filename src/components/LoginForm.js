@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Text } from 'react-native';
 
 import { Button, Card, CardSection, Input, Spinner } from './common';
-import { userNameChanged, loginUser } from '../actions';
+import { userNameChanged, joinSocket } from '../actions';
 
 class LoginForm extends React.Component {
   onUserNameChange(text) {
@@ -11,8 +11,7 @@ class LoginForm extends React.Component {
   }
 
   onButtonPress() {
-    const { userName } = this.props;
-    this.props.loginUser({ userName });
+    this.props.joinSocket();
   }
 
   renderButton() {
@@ -62,10 +61,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ userName, error, loading }) => {
+const mapStateToProps = (state) => {
+  const { userName, error, loading } = state.auth;
   return { userName, error, loading };
 };
 
 export default connect(mapStateToProps, {
-  userNameChanged, loginUser
+  userNameChanged, joinSocket
 })(LoginForm);

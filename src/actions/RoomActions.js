@@ -3,9 +3,21 @@ import { Actions } from 'react-native-router-flux';
 import {
 } from './types.js';
 
+export const messageTextChanged = (text) => {
+  return {
+    type: 'message_text_changed',
+    payload: text
+  };
+};
+
+export const addMessage = (channel, messageText, roomName, userName) => {
+  return (dispatch) => {
+    channel.push('new:msg', { messageText, userName });
+  };
+};
+
 export const joinRoom = (roomName, socket, userName) => {
   return (dispatch) => {
-    //dispatch({ type: JOIN_ROOM });
 
     const channel = socket.channel(`room:${roomName}`, { userName });
 
@@ -15,7 +27,10 @@ export const joinRoom = (roomName, socket, userName) => {
         console.log('ignore');
       })
       .receive('ok', () => {
-        dispatch({ type: 'join_room_success' });
+        dispatch({
+          type: 'join_room_success',
+          payload: { channel, roomName }
+        });
         setUpNewMessagesHandler(dispatch, channel, roomName);
         Actions.roomEdit({ room: { name: roomName } });
       })

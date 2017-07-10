@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Text, View, ScrollView } from 'react-native';
-import Communications from 'react-native-communications';
 
-import { employeeUpdate, employeeEdit, employeeDelete } from '../actions';
-import { Card, CardSection, Button, Confirm, Input } from './common';
-import RoomForm from './RoomForm';
+import { addMessage, messageTextChanged } from '../actions';
+import { Card, CardSection, Button, Input } from './common';
 
 class RoomEdit extends Component {
-  // TODO Fetch messages when we open room
-
   onButtonPress() {
+    const roomName = this.props.room.name;
+
+    this.props.addMessage(
+      this.props.channels[roomName],
+      this.props.messageText,
+      roomName,
+      this.props.userName
+    );
   }
 
   renderMessages() {
@@ -22,10 +26,10 @@ class RoomEdit extends Component {
     }
 
     return roomMessages.map(message =>
-      <CardSection key={message}>
+      <CardSection key={message.id}>
         <View style={styles.headerContentStyle}>
-          <Text style={styles.headerTextStyle}>{message}</Text>
-          <Text>{message}</Text>
+          <Text style={styles.headerTextStyle}>{message.messageText}</Text>
+          <Text>{message.userName}</Text>
         </View>
       </CardSection>
     );
@@ -44,11 +48,13 @@ class RoomEdit extends Component {
           <Input
             label="Message:"
             placeholder="I love cats..."
+            value={this.props.messageText}
+            onChangeText={text => this.props.messageTextChanged(text)}
           />
         </CardSection>
 
         <CardSection>
-          <Button>
+          <Button onPress={this.onButtonPress.bind(this)}>
             Create
           </Button>
         </CardSection>
@@ -69,9 +75,10 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const { messages } = state.room;
+  const { messages, messageText, channels } = state.room;
+  const { userName } = state.auth;
 
-  return { messages };
+  return { messages, userName, messageText, channels };
 };
 
-export default connect(mapStateToProps)(RoomEdit);
+export default connect(mapStateToProps, { messageTextChanged, addMessage })(RoomEdit);

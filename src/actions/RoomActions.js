@@ -7,20 +7,27 @@ export const joinRoom = (roomName, socket, userName) => {
   return (dispatch) => {
     //dispatch({ type: JOIN_ROOM });
 
-    const chan = socket.channel(`room:${roomName}`, { userName });
+    const channel = socket.channel(`room:${roomName}`, { userName });
 
     // join the channel
-    chan.join()
+    channel.join()
       .receive('ignore', () => {
         console.log('ignore');
       })
       .receive('ok', () => {
-        console.log('joined room ', roomName);
         dispatch({ type: 'join_room_success' });
+        setUpNewMessagesHandler(dispatch, channel, roomName);
         Actions.roomEdit({ room: { name: roomName } });
       })
       .receive('timeout', () => {
         console.log('timeout when joining room ', roomName);
       });
   };
+};
+
+const setUpNewMessagesHandler = (dispatch, channel, roomName) => {
+  channel.on('new_messages', payload => {
+    const messages = payload.value;
+    dispatch({ type: 'new_messages', payload: { roomName, messages } });
+  });
 };

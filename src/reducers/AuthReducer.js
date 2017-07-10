@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USERNAME_CHANGED:
-      return { ...state, userName: action.payload };
+      return { ...state, userName: action.payload, error: '', loading: false };
     case LOGIN_USER:
       return { ...state, loading: true, error: '' };
     case 'connect_success':

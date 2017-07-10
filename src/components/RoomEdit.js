@@ -5,7 +5,7 @@ import { Text, ScrollView } from 'react-native';
 import Communications from 'react-native-communications';
 
 import { employeeUpdate, employeeEdit, employeeDelete } from '../actions';
-import { Card, CardSection, Button, Confirm } from './common';
+import { Card, CardSection, Button, Confirm, Input } from './common';
 import RoomForm from './RoomForm';
 
 class RoomEdit extends Component {
@@ -30,9 +30,26 @@ class RoomEdit extends Component {
 
   render() {
     return (
-      <ScrollView>
-        {this.renderMessages()}
-      </ScrollView>
+      <Card>
+        <CardSection>
+          <ScrollView>
+            {this.renderMessages()}
+          </ScrollView>
+        </CardSection>
+
+        <CardSection>
+          <Input
+            label="New Message"
+            placeholder="A messsage"
+          />
+        </CardSection>
+
+        <CardSection>
+          <Button>
+            Create
+          </Button>
+        </CardSection>
+      </Card>
     );
   }
 }

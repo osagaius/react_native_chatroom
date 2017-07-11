@@ -21,8 +21,4 @@ class RoomForm extends Component {
   }
 }
 
-const styles = {
-
-};
-
 export default connect(null, { joinRoom })(RoomForm);

@@ -24,8 +24,6 @@ class RoomForm extends Component {
 const mapStateToProps = (state) => {
   const { name } = state.roomForm;
 
-  console.log('new room name: ', name);
-
   return { name };
 };
 

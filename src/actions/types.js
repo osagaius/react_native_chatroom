@@ -1,5 +1,9 @@
-export const USERNAME_CHANGED = 'email_changed';
-export const PASSWORD_CHANGED = 'password_changed';
+export const CONNECT_SUCCESS = 'CONNECT_SUCCESS';
+export const CONNECT_FAIL = 'CONNECT_FAIL';
+
+export const NEW_MESSAGES_RECEIVED = 'NEW_MESSAGES_RECEIVED';
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const JOIN_ROOM_SUCCESS = 'JOIN_ROOM_SUCCESS';
 
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
@@ -10,3 +14,6 @@ export const EMPLOYEE_CREATE = 'EMPLOYEE_CREATE';
 export const EMPLOYEES_FETCH_SUCCESS = 'EMPLOYEES_FETCH_SUCCESS';
 export const EMPLOYEE_SAVE_SUCCESS = 'EMPLOYEE_SAVE_SUCCESS';
 export const EMPLOYEE_CREATE_SUCCESS = 'EMPLOYEE_CREATE_SUCCESS';
+
+export const USERNAME_CHANGED = 'email_changed';
+export const PASSWORD_CHANGED = 'password_changed';

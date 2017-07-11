@@ -1,4 +1,9 @@
 import {
+  NEW_MESSAGES_RECEIVED,
+  ADD_MESSAGE,
+  ADD_MESSAGE_SUCCESS,
+  ADD_MESSAGE_FAILURE,
+  JOIN_ROOM_SUCCESS,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -15,30 +20,30 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         messageText: action.payload,
       };
-    case 'new_messages':
+    case NEW_MESSAGES_RECEIVED:
       return { ...state,
         messages: {
           ...state.messages,
           [action.payload.roomName]: action.payload.messages
         }
       };
-    case 'add_message':
+    case ADD_MESSAGE:
       return {
         ...state,
         error: '',
         messageText: ''
       };
-    case 'add_message_success':
+    case ADD_MESSAGE_SUCCESS:
       return {
         ...state,
         messageText: ''
       };
-    case 'add_message_failure':
+    case ADD_MESSAGE_FAILURE:
       return {
         ...state,
         error: 'Failed to send message'
       };
-    case 'join_room_success':
+    case JOIN_ROOM_SUCCESS:
       return { ...state,
         channels: {
           ...state.channels,

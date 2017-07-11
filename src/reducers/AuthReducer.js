@@ -1,5 +1,9 @@
-import { USERNAME_CHANGED,
-  LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER } from '../actions/types.js';
+import {
+  USERNAME_CHANGED,
+  LOGIN_USER,
+  CONNECT_FAIL,
+  CONNECT_SUCCESS
+ } from '../actions/types.js';
 
 const INITIAL_STATE = {
   userName: '',
@@ -14,12 +18,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, userName: action.payload, error: '', loading: false };
     case LOGIN_USER:
       return { ...state, loading: true, error: '' };
-    case 'connect_success':
+    case CONNECT_SUCCESS:
       return {
         ...state,
         socket: action.payload.socket
       };
-    case 'connect_fail':
+    case CONNECT_FAIL:
       return { ...state,
         loading: false,
         error: 'Connection Failed.',

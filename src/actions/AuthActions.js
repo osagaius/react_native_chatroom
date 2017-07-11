@@ -3,8 +3,8 @@ import { Socket } from 'phoenix';
 
 import {
   USERNAME_CHANGED,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAIL,
+  CONNECT_FAIL,
+  CONNECT_SUCCESS,
   LOGIN_USER
 } from './types.js';
 
@@ -22,20 +22,24 @@ export const joinSocket = () => {
 
     const url = 'http://localhost:4000/socket';
     const socket = new Socket(url);
+
     socket.connect();
-    socket.onOpen(event => {
-      dispatch({ type: 'connect_success', payload: { socket } });
+
+    socket.onOpen(() => {
+      dispatch({ type: CONNECT_SUCCESS, payload: { socket } });
       Actions.main();
     });
-    socket.onError(event => {
+
+    socket.onError(() => {
       loginUserFail(dispatch);
     });
-    socket.onClose(event => {
+
+    socket.onClose(() => {
       loginUserFail(dispatch);
     });
   };
 };
 
 const loginUserFail = (dispatch) => {
-  dispatch({ type: 'connect_fail' });
+  dispatch({ type: CONNECT_FAIL });
 };

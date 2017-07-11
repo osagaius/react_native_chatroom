@@ -10,7 +10,7 @@ class App extends React.Component {
   state = { loggedIn: null }
 
   componentWillMount() {
-
+    console.disableYellowBox = true;
   }
 
   render() {

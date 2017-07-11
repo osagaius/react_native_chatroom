@@ -13,7 +13,7 @@ class RoomForm extends Component {
             label="Name"
             placeholder="German Sherpards Over Everything"
             value={this.props.name}
-            onChangeText={value => this.props.roomNameChanged({ name }}
+            onChangeText={name => this.props.roomNameChanged({ name })}
           />
         </CardSection>
       </View>
@@ -22,7 +22,7 @@ class RoomForm extends Component {
 }
 
 const styles = {
-  
+
 };
 
 export default connect(null, { joinRoom })(RoomForm);

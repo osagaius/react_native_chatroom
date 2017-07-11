@@ -16,9 +16,11 @@ class RoomList extends React.Component {
       redirectToRoom
     );
 
-    // TODO Fetch rooms from the server
-    const rooms = [];
-    this.createDataSource(rooms);
+    this.createDataSource(this.props.rooms);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.createDataSource(nextProps.rooms);
   }
 
   createDataSource(rooms) {
@@ -45,9 +47,11 @@ class RoomList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('ROOMS LIST GOT NEW STATE ', state);
   const { socket, userName } = state.auth;
+  const { rooms } = state.room;
 
-  return { socket, userName };
+  return { socket, userName, rooms };
 };
 
 export default connect(mapStateToProps, { joinRoom })(RoomList);

@@ -4,18 +4,25 @@ import {
   ADD_MESSAGE_SUCCESS,
   ADD_MESSAGE_FAILURE,
   JOIN_ROOM_SUCCESS,
-  MESSAGE_TEXT_CHANGED
+  MESSAGE_TEXT_CHANGED,
+  NEW_ROOMS_LIST_RECEIVED
 } from '../actions/types';
 
 const INITIAL_STATE = {
   messages: {},
   channels: {},
   error: '',
-  messageText: ''
+  messageText: '',
+  rooms: []
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case NEW_ROOMS_LIST_RECEIVED:
+      return {
+        ...state,
+        rooms: action.payload,
+      };
     case MESSAGE_TEXT_CHANGED:
       return {
         ...state,

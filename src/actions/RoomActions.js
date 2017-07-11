@@ -6,7 +6,8 @@ import {
   JOIN_ROOM_SUCCESS,
   MESSAGE_TEXT_CHANGED,
   ROOM_FORM_NAME_CHANGED,
-  ROOM_CREATE_SUCCESS
+  ROOM_CREATE_SUCCESS,
+  NEW_ROOMS_LIST_RECEIVED
 } from './types.js';
 
 export const roomNameChanged = ({ text }) => {
@@ -18,7 +19,10 @@ export const roomNameChanged = ({ text }) => {
 
 export const roomCreate = ({ socket, name, userName }) => {
   return (dispatch) => {
-    createAndJoinRoom({ dispatch, socket, name, userName, redirect: true });
+    const successAction = {
+      type: ROOM_CREATE_SUCCESS
+    };
+    createAndJoinRoom({ dispatch, socket, name, userName, redirect: false, successAction });
   };
 };
 
@@ -52,7 +56,15 @@ const setUpNewMessagesHandler = (dispatch, channel, roomName) => {
   });
 };
 
-const createAndJoinRoom = ({ dispatch, socket, name, userName, redirect }) => {
+const setUpRoomsListHandler = (dispatch, channel) => {
+  channel.on('rooms_list', payload => {
+    console.log('received rooms_list messages: ', payload);
+    const rooms = payload.value;
+    dispatch({ type: NEW_ROOMS_LIST_RECEIVED, payload: rooms });
+  });
+};
+
+const createAndJoinRoom = ({ dispatch, socket, name, userName, redirect, successAction }) => {
   const channel = socket.channel(`room:${name}`, { userName });
 
   // join the channel
@@ -66,10 +78,18 @@ const createAndJoinRoom = ({ dispatch, socket, name, userName, redirect }) => {
         type: JOIN_ROOM_SUCCESS,
         payload: { channel, name }
       });
+
+      if (successAction !== undefined && successAction) {
+        dispatch(successAction);
+      }
+
       setUpNewMessagesHandler(dispatch, channel, name);
+      setUpRoomsListHandler(dispatch, channel);
 
       if (redirect === true) {
-        Actions.roomEdit({ room: { name } });
+        Actions.roomEdit({ room: { name }, type: 'reset' });
+      } else {
+        Actions.main();
       }
     })
     .receive('timeout', () => {

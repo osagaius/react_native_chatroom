@@ -70,8 +70,8 @@ class RoomEdit extends Component {
 
 const styles = {
   messagesCardStyle: {
-    marginBottom: 20,
-    height: 450
+    marginBottom: 10,
+    height: 380
   },
   headerContentStyle: {
     flexDirection: 'column',

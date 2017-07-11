@@ -21,14 +21,18 @@ export const joinSocket = () => {
     dispatch({ type: LOGIN_USER });
 
     const url = 'http://localhost:4000/socket';
-    const socket = new Socket(url, {});
+    const socket = new Socket(url);
+    socket.connect();
     socket.onOpen(event => {
       dispatch({ type: 'connect_success', payload: { socket } });
       Actions.main();
     });
-    socket.onError(event => loginUserFail(dispatch));
-    socket.onClose(event => loginUserFail(dispatch));
-    socket.connect({});
+    socket.onError(event => {
+      loginUserFail(dispatch);
+    });
+    socket.onClose(event => {
+      loginUserFail(dispatch);
+    });
   };
 };
 

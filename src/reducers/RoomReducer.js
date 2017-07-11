@@ -3,7 +3,9 @@ import {
 
 const INITIAL_STATE = {
   messages: {},
-  channels: {}
+  channels: {},
+  error: '',
+  messageText: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -11,7 +13,7 @@ export default (state = INITIAL_STATE, action) => {
     case 'message_text_changed':
       return {
         ...state,
-        messageText: action.payload
+        messageText: action.payload,
       };
     case 'new_messages':
       return { ...state,
@@ -19,6 +21,22 @@ export default (state = INITIAL_STATE, action) => {
           ...state.messages,
           [action.payload.roomName]: action.payload.messages
         }
+      };
+    case 'add_message':
+      return {
+        ...state,
+        error: '',
+        messageText: ''
+      };
+    case 'add_message_success':
+      return {
+        ...state,
+        messageText: ''
+      };
+    case 'add_message_failure':
+      return {
+        ...state,
+        error: 'Failed to send message'
       };
     case 'join_room_success':
       return { ...state,

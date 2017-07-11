@@ -12,6 +12,8 @@ export const messageTextChanged = (text) => {
 
 export const addMessage = (channel, messageText, roomName, userName) => {
   return (dispatch) => {
+    dispatch({ type: 'add_message' });
+
     channel.push('new:msg', { messageText, userName });
   };
 };

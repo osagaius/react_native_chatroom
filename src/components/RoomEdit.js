@@ -9,6 +9,7 @@ import { Card, CardSection, Button, Input } from './common';
 class RoomEdit extends Component {
   onButtonPress() {
     const roomName = this.props.room.name;
+    this.scrollView.scrollToEnd({ animated: true });
 
     this.props.addMessage(
       this.props.channels[roomName],
@@ -36,10 +37,14 @@ class RoomEdit extends Component {
   }
 
   render() {
+    this.scrollView = ScrollView;
+
     return (
       <Card>
-        <CardSection style={{ marginBottom: 20 }}>
-          <ScrollView>
+        <CardSection style={styles.messagesCardStyle}>
+          <ScrollView
+            ref={(scrollView) => { this.scrollView = scrollView; }}
+          >
             {this.renderMessages()}
           </ScrollView>
         </CardSection>
@@ -55,7 +60,7 @@ class RoomEdit extends Component {
 
         <CardSection>
           <Button onPress={this.onButtonPress.bind(this)}>
-            Create
+            Submit
           </Button>
         </CardSection>
       </Card>
@@ -64,6 +69,10 @@ class RoomEdit extends Component {
 }
 
 const styles = {
+  messagesCardStyle: {
+    marginBottom: 20,
+    height: 450
+  },
   headerContentStyle: {
     flexDirection: 'column',
     justifyContent: 'space-around',

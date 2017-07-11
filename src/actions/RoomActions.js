@@ -58,7 +58,6 @@ const setUpNewMessagesHandler = (dispatch, channel, roomName) => {
 
 const setUpRoomsListHandler = (dispatch, channel) => {
   channel.on('rooms_list', payload => {
-    console.log('received rooms_list messages: ', payload);
     const rooms = payload.value;
     dispatch({ type: NEW_ROOMS_LIST_RECEIVED, payload: rooms });
   });

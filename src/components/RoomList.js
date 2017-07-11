@@ -47,7 +47,6 @@ class RoomList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('ROOMS LIST GOT NEW STATE ', state);
   const { socket, userName } = state.auth;
   const { rooms } = state.room;
 

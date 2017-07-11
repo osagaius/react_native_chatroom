@@ -55,7 +55,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state,
         channels: {
           ...state.channels,
-          [action.payload.roomName]: action.payload.channel
+          [action.payload.name]: action.payload.channel
         }
       };
     default:

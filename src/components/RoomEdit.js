@@ -10,7 +10,6 @@ class RoomEdit extends Component {
   onButtonPress() {
     const roomName = this.props.room.name;
     this.scrollView.scrollToEnd({ animated: true });
-
     this.props.addMessage(
       this.props.channels[roomName],
       this.props.messageText,

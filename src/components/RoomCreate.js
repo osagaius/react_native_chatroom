@@ -6,6 +6,8 @@ import RoomForm from './RoomForm';
 
 class RoomCreate extends Component {
   onButtonPress() {
+    const { socket, name, userName } = this.props;
+    this.props.roomCreate({ socket, name, userName });
   }
 
   render() {
@@ -22,6 +24,13 @@ class RoomCreate extends Component {
   }
 }
 
-export default connect(null, {
+const mapStateToProps = (state) => {
+  const { socket, userName } = state.auth;
+  const { name } = state.roomForm;
+
+  return { socket, name, userName };
+};
+
+export default connect(mapStateToProps, {
   roomCreate
 })(RoomCreate);

@@ -16,9 +16,9 @@ export const roomNameChanged = ({ text }) => {
   };
 };
 
-export const createRoom = (roomName, channel) => {
+export const roomCreate = ({ socket, name, userName }) => {
   return (dispatch) => {
-    
+    createAndJoinRoom({ dispatch, socket, name, userName });
   };
 };
 
@@ -38,28 +38,10 @@ export const addMessage = (channel, messageText, roomName, userName) => {
 };
 
 export const joinRoom = (roomName, socket, userName) => {
+  const name = roomName;
+
   return (dispatch) => {
-
-    const channel = socket.channel(`room:${roomName}`, { userName });
-
-    // join the channel
-    channel.join()
-      .receive('ignore', () => {
-        //TODO Dispatch error
-        console.log('ignore');
-      })
-      .receive('ok', () => {
-        dispatch({
-          type: JOIN_ROOM_SUCCESS,
-          payload: { channel, roomName }
-        });
-        setUpNewMessagesHandler(dispatch, channel, roomName);
-        Actions.roomEdit({ room: { name: roomName } });
-      })
-      .receive('timeout', () => {
-        //TODO Dispatch error
-        console.log('timeout when joining room ', roomName);
-      });
+    createAndJoinRoom({ dispatch, socket, name, userName });
   };
 };
 
@@ -68,4 +50,27 @@ const setUpNewMessagesHandler = (dispatch, channel, roomName) => {
     const messages = payload.value;
     dispatch({ type: NEW_MESSAGES_RECEIVED, payload: { roomName, messages } });
   });
+};
+
+const createAndJoinRoom = ({ dispatch, socket, name, userName }) => {
+  const channel = socket.channel(`room:${name}`, { userName });
+
+  // join the channel
+  channel.join()
+    .receive('ignore', () => {
+      //TODO Dispatch error
+      console.log('ignore');
+    })
+    .receive('ok', () => {
+      dispatch({
+        type: JOIN_ROOM_SUCCESS,
+        payload: { channel, name }
+      });
+      setUpNewMessagesHandler(dispatch, channel, name);
+      Actions.roomEdit({ room: { name } });
+    })
+    .receive('timeout', () => {
+      //TODO Dispatch error
+      console.log('timeout when joining room ', name);
+    });
 };

@@ -34,7 +34,4 @@ class RoomList extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { };
-};
-export default connect(mapStateToProps)(RoomList);
+export default connect(null)(RoomList);

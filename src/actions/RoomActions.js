@@ -18,7 +18,7 @@ export const roomNameChanged = ({ text }) => {
 
 export const roomCreate = ({ socket, name, userName }) => {
   return (dispatch) => {
-    createAndJoinRoom({ dispatch, socket, name, userName });
+    createAndJoinRoom({ dispatch, socket, name, userName, redirect: true });
   };
 };
 
@@ -37,11 +37,11 @@ export const addMessage = (channel, messageText, roomName, userName) => {
   };
 };
 
-export const joinRoom = (roomName, socket, userName) => {
+export const joinRoom = (roomName, socket, userName, redirect) => {
   const name = roomName;
 
   return (dispatch) => {
-    createAndJoinRoom({ dispatch, socket, name, userName });
+    createAndJoinRoom({ dispatch, socket, name, userName, redirect });
   };
 };
 
@@ -52,7 +52,7 @@ const setUpNewMessagesHandler = (dispatch, channel, roomName) => {
   });
 };
 
-const createAndJoinRoom = ({ dispatch, socket, name, userName }) => {
+const createAndJoinRoom = ({ dispatch, socket, name, userName, redirect }) => {
   const channel = socket.channel(`room:${name}`, { userName });
 
   // join the channel
@@ -67,7 +67,10 @@ const createAndJoinRoom = ({ dispatch, socket, name, userName }) => {
         payload: { channel, name }
       });
       setUpNewMessagesHandler(dispatch, channel, name);
-      Actions.roomEdit({ room: { name } });
+
+      if (redirect === true) {
+        Actions.roomEdit({ room: { name } });
+      }
     })
     .receive('timeout', () => {
       //TODO Dispatch error

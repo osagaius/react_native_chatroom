@@ -8,7 +8,13 @@ import { joinRoom } from '../actions';
 
 class ListItem extends React.Component {
   onRowPress() {
-    this.props.joinRoom(this.props.room.name, this.props.socket, this.props.userName);
+    const redirectToRoom = true;
+    this.props.joinRoom(
+      this.props.room.name,
+      this.props.socket,
+      this.props.userName,
+      redirectToRoom
+    );
   }
 
   render() {

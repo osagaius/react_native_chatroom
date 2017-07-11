@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
 import AuthReducer from './AuthReducer';
-import EmployeeFormReducer from './EmployeeFormReducer';
-import EmployeeReducer from './EmployeeReducer';
+import RoomFormReducer from './RoomFormReducer';
 import RoomReducer from './RoomReducer';
 
 export default combineReducers({
   room: RoomReducer,
   auth: AuthReducer,
-  employeeForm: EmployeeFormReducer,
-  employees: EmployeeReducer
+  roomForm: RoomFormReducer
 });

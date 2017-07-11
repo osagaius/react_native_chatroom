@@ -4,6 +4,7 @@ import {
   ADD_MESSAGE_SUCCESS,
   ADD_MESSAGE_FAILURE,
   JOIN_ROOM_SUCCESS,
+  MESSAGE_TEXT_CHANGED
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -15,7 +16,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'message_text_changed':
+    case MESSAGE_TEXT_CHANGED:
       return {
         ...state,
         messageText: action.payload,

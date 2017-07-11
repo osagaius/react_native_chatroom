@@ -17,10 +17,10 @@ const RouterComponent = () => {
             key="roomList"
             component={RoomList}
             title="Rooms"
-            onRight={() => Actions.employeeCreate()}
+            onRight={() => Actions.roomCreate()}
             rightTitle="Add Room"
           />
-          <Scene key="employeeCreate" component={RoomCreate} title="Create Employee" />
+        <Scene key="roomCreate" component={RoomCreate} title="Create Room" />
           <Scene key="roomEdit" component={RoomEdit} title="Room" />
         </Scene>
       </Scene>

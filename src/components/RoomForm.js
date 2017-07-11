@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Picker } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { joinRoom } from '../actions';
+import { roomNameChanged } from '../actions';
 import { CardSection, Input } from './common';
 
 class RoomForm extends Component {
@@ -13,7 +13,7 @@ class RoomForm extends Component {
             label="Name"
             placeholder="German Sherpards Over Everything"
             value={this.props.name}
-            onChangeText={name => this.props.roomNameChanged({ name })}
+            onChangeText={text => this.props.roomNameChanged({ text })}
           />
         </CardSection>
       </View>
@@ -21,4 +21,12 @@ class RoomForm extends Component {
   }
 }
 
-export default connect(null, { joinRoom })(RoomForm);
+const mapStateToProps = (state) => {
+  const { name } = state.roomForm;
+
+  console.log('new room name: ', name);
+
+  return { name };
+};
+
+export default connect(mapStateToProps, { roomNameChanged })(RoomForm);

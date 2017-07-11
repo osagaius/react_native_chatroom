@@ -22,12 +22,6 @@ class RoomCreate extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { name } = state.roomForm;
-
-  return { name };
-};
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   roomCreate
 })(RoomCreate);

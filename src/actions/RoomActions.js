@@ -4,11 +4,27 @@ import {
   NEW_MESSAGES_RECEIVED,
   ADD_MESSAGE,
   JOIN_ROOM_SUCCESS,
+  MESSAGE_TEXT_CHANGED,
+  ROOM_FORM_NAME_CHANGED,
+  ROOM_CREATE_SUCCESS
 } from './types.js';
+
+export const roomNameChanged = ({ text }) => {
+  return {
+    type: ROOM_FORM_NAME_CHANGED,
+    payload: text
+  };
+};
+
+export const createRoom = (roomName, channel) => {
+  return (dispatch) => {
+    
+  };
+};
 
 export const messageTextChanged = (text) => {
   return {
-    type: 'message_text_changed',
+    type: MESSAGE_TEXT_CHANGED,
     payload: text
   };
 };

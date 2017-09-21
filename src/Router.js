@@ -7,7 +7,7 @@ import RoomEdit from './components/RoomEdit';
 
 const RouterComponent = () => {
   return (
-    <Router sceneStyle={{ paddingTop: 65 }}>
+    <Router sceneStyle={{ paddingTop: 1 }}>
       <Scene key="root" hideNavBar>
         <Scene key="auth">
           <Scene key="login" component={LoginForm} title="Choose Username" />
@@ -20,8 +20,8 @@ const RouterComponent = () => {
             onRight={() => Actions.roomCreate()}
             rightTitle="Add Room"
           />
-        <Scene key="roomCreate" component={RoomCreate} title="Create Room" />
           <Scene key="roomEdit" component={RoomEdit} title="Room" />
+          <Scene key="roomCreate" component={RoomCreate} title="Create Room" />
         </Scene>
       </Scene>
 

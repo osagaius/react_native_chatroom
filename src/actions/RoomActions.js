@@ -86,7 +86,7 @@ const createAndJoinRoom = ({ dispatch, socket, name, userName, redirect, success
       setUpRoomsListHandler(dispatch, channel);
 
       if (redirect === true) {
-        Actions.roomEdit({ room: { name }, type: 'reset' });
+        Actions.roomEdit({ room: { name } });
       } else {
         Actions.main();
       }

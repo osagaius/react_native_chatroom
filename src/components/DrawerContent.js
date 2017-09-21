@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, ViewPropTypes } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+
+import RoomList from './RoomList';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,27 +10,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: 'red',
+    borderWidth: 2
   },
 });
 
 class DrawerContent extends React.Component {
-  static propTypes = {
-    name: PropTypes.string,
-    sceneStyle: ViewPropTypes.style,
-    title: PropTypes.string,
-  }
-
-  static contextTypes = {
-    drawer: React.PropTypes.object,
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <Text>Drawer Content</Text>
         <Text>Title: {this.props.title}</Text>
+        <RoomList />
       </View >
     );
   }

@@ -16,12 +16,14 @@ export const userNameChanged = (text) => {
 };
 
 // TODO Rename since we aren't doing login stuff here
-export const joinSocket = () => {
+export const joinSocket = (user) => {
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
 
     const url = 'http://localhost:4000/socket';
-    const socket = new Socket(url);
+    const socket = new Socket(url, {
+      params: { user }
+    });
 
     socket.connect();
 

@@ -11,7 +11,7 @@ class LoginForm extends React.Component {
   }
 
   onButtonPress() {
-    this.props.joinSocket();
+    this.props.joinSocket(this.props.userName);
   }
 
   renderButton() {

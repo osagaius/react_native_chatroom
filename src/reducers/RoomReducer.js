@@ -13,11 +13,18 @@ const INITIAL_STATE = {
   channels: {},
   error: '',
   messageText: '',
-  rooms: []
+  rooms: [],
+  users: []
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case 'PRESENCE_CHANGED':
+      console.log('PRESENCE_CHANGED' + action.payload);
+      return {
+        ...state,
+        users: action.payload
+      };
     case NEW_ROOMS_LIST_RECEIVED:
       return {
         ...state,

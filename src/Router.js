@@ -9,7 +9,7 @@ import MenuIcon from './images/menu_burger.png';
 
 const RouterComponent = () => {
   return (
-    <Router sceneStyle={{ paddingTop: 1 }}>
+    <Router>
       <Stack key="root" hideNavBar>
         <Scene key="auth">
           <Scene key="login" component={LoginForm} title="Choose Username" />

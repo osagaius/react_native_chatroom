@@ -1,4 +1,5 @@
 import { Actions } from 'react-native-router-flux';
+import { Presence } from 'phoenix';
 
 import {
   NEW_MESSAGES_RECEIVED,
@@ -15,6 +16,14 @@ export const roomNameChanged = ({ text }) => {
     type: ROOM_FORM_NAME_CHANGED,
     payload: text
   };
+};
+
+const syncPresentUsers = (dispatch, presences) => {
+  const presentUsers = [];
+  Presence.list(presences, (id, { metas: [first] }) => first.user)
+          .map(user => presentUsers.push(user));
+  console.log(presentUsers);
+  dispatch({ type: 'PRESENCE_CHANGED', payload: presentUsers });
 };
 
 export const roomCreate = ({ socket, name, userName }) => {
@@ -63,6 +72,20 @@ const setUpRoomsListHandler = (dispatch, channel) => {
   });
 };
 
+const setupPresenceListeners = (dispatch, channel) => {
+  let presences = {};
+
+  channel.on('presence_state', (state) => {
+    presences = Presence.syncState(presences, state);
+    syncPresentUsers(dispatch, presences);
+  });
+
+  channel.on('presence_diff', (diff) => {
+    presences = Presence.syncDiff(presences, diff);
+    syncPresentUsers(dispatch, presences);
+  });
+};
+
 const createAndJoinRoom = ({ dispatch, socket, name, userName, redirect, successAction }) => {
   const channel = socket.channel(`room:${name}`, { userName });
 
@@ -85,10 +108,12 @@ const createAndJoinRoom = ({ dispatch, socket, name, userName, redirect, success
       setUpNewMessagesHandler(dispatch, channel, name);
       setUpRoomsListHandler(dispatch, channel);
 
-      if (redirect === true) {
-        Actions.roomEdit({ room: { name } });
-      } else {
-        Actions.main();
+      if (name === 'lobby') {
+        setupPresenceListeners(dispatch, channel);
+      }
+
+      if (Actions.currentScene !== 'roomList') {
+        Actions.roomList();
       }
     })
     .receive('timeout', () => {

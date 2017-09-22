@@ -38,7 +38,12 @@ class RoomList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { users } = state.room;
+  let { users } = state.room;
+  const { userName } = state.auth;
+
+  users = users.filter((el) => {
+    return el !== userName;
+  });
 
   return { users };
 };
